@@ -46,7 +46,7 @@
                 android:id="@+id/balanceTextView"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
-                android:text="500.00"
+                android:text="XXXXX"
                 android:textColor="@color/black"
                 android:textSize="30sp"
                 app:layout_constraintBottom_toBottomOf="parent"

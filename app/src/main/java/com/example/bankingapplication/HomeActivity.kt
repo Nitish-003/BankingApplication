@@ -29,6 +29,8 @@ class HomeActivity : AppCompatActivity() {
         val mapImage = findViewById<ImageView>(R.id.mapImage)
         val dialImage = findViewById<ImageView>(R.id.dialImage)
         val shareImage = findViewById<ImageView>(R.id.shareImage)
+        val rateImage = findViewById<ImageView>(R.id.rateImage)
+
         val balanceTextView = findViewById<TextView>(R.id.balanceTextView)
         val balanceSwitch = findViewById<Switch>(R.id.switch1)
 
@@ -37,6 +39,12 @@ class HomeActivity : AppCompatActivity() {
 
         backArrow.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        rateImage.setOnClickListener {
+            val intent = Intent(this, Rating::class.java)
             startActivity(intent)
             finish()
         }
@@ -73,11 +81,16 @@ class HomeActivity : AppCompatActivity() {
         balanceSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 balanceTextView.text = "500.00" // Show balance when switch is ON
-                balanceSwitch.text = "Hide Balance"
+                balanceSwitch.text = "Show Balance"
             } else {
                 balanceTextView.text = "XXXX" // Hide balance when switch is OFF
-                balanceSwitch.text = "Show Balance"
+                balanceSwitch.text = "Hide Balance"
             }
         }
+
+
+
+
+
     }
 }
