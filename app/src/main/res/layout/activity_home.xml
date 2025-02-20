@@ -9,7 +9,6 @@
     tools:context=".HomeActivity">
     <include layout="@layout/toolbar" />
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCardView"
         android:layout_width="338dp"
