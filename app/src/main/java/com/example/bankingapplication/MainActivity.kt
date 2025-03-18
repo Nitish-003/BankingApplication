@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
             if (username.equals("Nitish", ignoreCase = true) && password == "1234") {
                 val intent = Intent(this, HomeActivity::class.java)
-                intent.putExtra("username", username)
+                intent.putExtra("username", "Nitish")
                 startActivity(intent)
                 finish()
             } else {
