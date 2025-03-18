@@ -10,9 +10,11 @@ import android.widget.ProgressBar
 import android.widget.RatingBar
 import androidx.activity.enableEdgeToEdge
 import android.app.AlertDialog
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class Rating : AppCompatActivity() {
@@ -34,6 +36,10 @@ class Rating : AppCompatActivity() {
         val ratingBar = findViewById<RatingBar>(R.id.ratingBar)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val backArrow = findViewById<ImageView>(R.id.backArrow)
+
+        val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
+        val username = intent.getStringExtra("username")
+        toolbarTitle.text = "Welcome $username"
 
         // Function to update progress bar dynamically
         fun updateProgress() {
@@ -83,5 +89,35 @@ class Rating : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.putExtra("username", "Nitish")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.nav_deposit -> {
+                    val intent = Intent(this, bookFD::class.java)
+                    intent.putExtra("username", "Nitish")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.nav_web -> {
+                    val intent = Intent(this, Rating::class.java)
+                    intent.putExtra("username", "Nitish")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
+
+
     }
 }

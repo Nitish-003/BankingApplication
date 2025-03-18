@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,8 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
+        println("Hello Home")
+
         val backArrow = findViewById<ImageView>(R.id.backArrow)
         val menuArrow = findViewById<ImageView>(R.id.menuArrow)
         val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
@@ -30,6 +33,7 @@ class HomeActivity : AppCompatActivity() {
         val dialImage = findViewById<ImageView>(R.id.dialImage)
         val shareImage = findViewById<ImageView>(R.id.shareImage)
         val rateImage = findViewById<ImageView>(R.id.rateImage)
+        val depositImage = findViewById<ImageView>(R.id.depositImage)
 
         val balanceTextView = findViewById<TextView>(R.id.balanceTextView)
         val balanceSwitch = findViewById<Switch>(R.id.switch1)
@@ -88,7 +92,39 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        depositImage.setOnClickListener {
+            val intent = Intent(this, bookFD::class.java)
+            startActivity(intent)
+            finish()
+        }
 
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.putExtra("username", "Nitish")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.nav_deposit -> {
+                    val intent = Intent(this, bookFD::class.java)
+                    intent.putExtra("username", "Nitish")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                R.id.nav_web -> {
+                    val intent = Intent(this, Rating::class.java)
+                    intent.putExtra("username", "Nitish")
+                    startActivity(intent)
+                    finish()
+                    true
+                }
+                else -> false
+            }
+        }
 
 
 
