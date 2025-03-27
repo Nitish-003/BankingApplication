@@ -45,6 +45,11 @@ class bookFD : AppCompatActivity() {
         val username = intent.getStringExtra("username")
         toolbarTitle.text = "Welcome $username"
 
+        val backArrow = findViewById<ImageView>(R.id.backArrow)
+        backArrow.setOnClickListener {
+            finish()
+        }
+
         // Spinner for Account Type
         val accountTypes = arrayOf("Savings", "Current", "Fixed Deposit")
         val accountAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, accountTypes)

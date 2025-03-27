@@ -35,11 +35,15 @@ class Rating : AppCompatActivity() {
         val complaintsEditText = findViewById<EditText>(R.id.complaintTextMultiLine) // FIXED
         val ratingBar = findViewById<RatingBar>(R.id.ratingBar)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val backArrow = findViewById<ImageView>(R.id.backArrow)
 
         val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
         val username = intent.getStringExtra("username")
         toolbarTitle.text = "Welcome $username"
+
+        val backArrow = findViewById<ImageView>(R.id.backArrow)
+        backArrow.setOnClickListener {
+            finish()
+        }
 
         // Function to update progress bar dynamically
         fun updateProgress() {

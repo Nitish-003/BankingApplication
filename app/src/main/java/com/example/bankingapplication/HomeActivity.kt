@@ -3,9 +3,12 @@ package com.example.bankingapplication
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,7 +28,6 @@ class HomeActivity : AppCompatActivity() {
 
         println("Hello Home")
 
-        val backArrow = findViewById<ImageView>(R.id.backArrow)
         val menuArrow = findViewById<ImageView>(R.id.menuArrow)
         val toolbarTitle = findViewById<TextView>(R.id.toolbarTitle)
         val webImage = findViewById<ImageView>(R.id.webImage)
@@ -41,16 +43,42 @@ class HomeActivity : AppCompatActivity() {
         val username = intent.getStringExtra("username")
         toolbarTitle.text = "Welcome $username"
 
+        val backArrow = findViewById<ImageView>(R.id.backArrow)
         backArrow.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
 
+        menuArrow.setOnClickListener { view ->
+            val popupMenu = PopupMenu(this, view)
+            popupMenu.menuInflater.inflate(R.menu.appbar_menu, popupMenu.menu)
+
+            popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+                when (item.itemId) {
+                    R.id.nav_home -> { // "Book FD" option
+                        val intent = Intent(this, bookFD::class.java)
+                        intent.putExtra("username", "Nitish")
+                        startActivity(intent)
+                        true
+                    }
+                    R.id.nav_deposit -> { // "Log out" option
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
+        }
+
+
         rateImage.setOnClickListener {
             val intent = Intent(this, Rating::class.java)
+            intent.putExtra("username", "Nitish")
             startActivity(intent)
-            finish()
         }
 
         webImage.setOnClickListener {
@@ -71,11 +99,36 @@ class HomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        shareImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.putExtra(Intent.EXTRA_TEXT, "Hi Christite!!, I am using banking application")
-            intent.type = "text/plain"
-            startActivity(Intent.createChooser(intent, "Share via"))
+        shareImage.setOnClickListener { view ->
+            val popupMenu = PopupMenu(this, view)
+            popupMenu.menuInflater.inflate(R.menu.share_menu, popupMenu.menu) // Assuming your XML file is named share_menu.xml
+
+            popupMenu.setOnMenuItemClickListener { item: MenuItem ->
+                when (item.itemId) {
+                    R.id.nav_sms -> { // SMS Option
+                        val smsIntent = Intent(Intent.ACTION_VIEW)
+                        smsIntent.data = Uri.parse("sms:") // Opens SMS app
+                        smsIntent.putExtra("sms_body", "Hi Christite!!, I am using banking application")
+                        startActivity(smsIntent)
+                        true
+                    }
+                    R.id.nav_mail -> { // Email Option
+                        val emailIntent = Intent(Intent.ACTION_SEND)
+                        emailIntent.type = "message/rfc822"
+                        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Banking Application")
+                        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi Christite!!, I am using banking application")
+                        try {
+                            startActivity(Intent.createChooser(emailIntent, "Send via Email"))
+                        } catch (ex: Exception) {
+                            Toast.makeText(this, "No Email app found", Toast.LENGTH_SHORT).show()
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            popupMenu.show()
         }
 
         // Set initial switch text
@@ -94,8 +147,8 @@ class HomeActivity : AppCompatActivity() {
 
         depositImage.setOnClickListener {
             val intent = Intent(this, bookFD::class.java)
+            intent.putExtra("username", "Nitish")
             startActivity(intent)
-            finish()
         }
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.nav_view)
@@ -105,21 +158,18 @@ class HomeActivity : AppCompatActivity() {
                     val intent = Intent(this, HomeActivity::class.java)
                     intent.putExtra("username", "Nitish")
                     startActivity(intent)
-                    finish()
                     true
                 }
                 R.id.nav_deposit -> {
                     val intent = Intent(this, bookFD::class.java)
                     intent.putExtra("username", "Nitish")
                     startActivity(intent)
-                    finish()
                     true
                 }
                 R.id.nav_web -> {
                     val intent = Intent(this, Rating::class.java)
                     intent.putExtra("username", "Nitish")
                     startActivity(intent)
-                    finish()
                     true
                 }
                 else -> false
